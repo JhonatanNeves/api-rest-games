@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 function auth (req, res, next){
     const authToken = req.headers['authorization'];
     if(authToken != undefined){
-        const bearer = authToken.split(' ');
+        const bearer = authToken.split("");
         var token = bearer[1];
         jwt.verify(token,JWTSecreat,(err, data) => {
             if(err){
@@ -73,7 +73,7 @@ var DB = {
 
 app.get("/games",auth, (req, res) => {
     res.statusCode = 200;
-    res.json({user: req.loggedUser, games: DB.games});
+    res.json(DB.games);
 });
 
 app.get("/game/:id" ,auth, (req, res) =>{
@@ -105,7 +105,7 @@ app.post("/game", auth,(req,res) =>{
     res.sendStatus(200);
 })
 
-app.delete("/game/:id",auth, (req, res) => {
+app.delete("/game/:id", auth,(req, res) => {
     if(isNaN(req.params.id)) {
         res.sendStatus(400);
     }else{
@@ -121,7 +121,7 @@ app.delete("/game/:id",auth, (req, res) => {
     }
 });
 
-app.put("/game/:id", auth,(req, res) => {
+app.put("/game/:id",auth,(req, res) => {
     if(isNaN(req.params.id)) {
         res.sendStatus(400);
     }else{
@@ -176,12 +176,12 @@ app.post("/auth",auth,(req, res) => {
 
         }else {
             res.status(404);
-            res.json({err: "Email não existe!"})
+            res.json({err: "Email não existe!"});
         }
 
     }else{
         res.status(400);
-        res.json({err: "Email invalido!"})
+        res.json({err: "Email invalido!"});
     }
 })
 
