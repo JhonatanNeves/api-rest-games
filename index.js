@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 function auth (req, res, next){
     const authToken = req.headers['authorization'];
     if(authToken != undefined){
-        const bearer = authToken.split("");
+        const bearer = authToken.split(' ');
         var token = bearer[1];
-        jwt.verify(token,JWTSecreat,(err, data) => {
+        jwt.verify(token,JWTSecret,(err, data) => {
             if(err){
                 res.status(401);
                 res.json({err:"token Inválido"});
@@ -60,7 +60,7 @@ var DB = {
         {
             id: 1,
             name: "Jhonatan Neves",
-            email: "teste1@gmail.com",
+            email: "teste@gmail.com",
             password: "123456"
         },
         {
