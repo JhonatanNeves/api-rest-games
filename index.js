@@ -72,7 +72,7 @@ var DB = {
     ]
 }
 
-app.get("/games", (req, res) => {
+app.get("/games",auth, (req, res) => {
     res.statusCode = 200;
     res.json(DB.games);
 });
@@ -93,7 +93,7 @@ app.get("/game/:id" ,auth, (req, res) =>{
     }
 });
 
-app.post("/game",(req,res) =>{
+app.post("/game",auth,(req,res) =>{
     var {title, price, year} = req.body;
 
     DB.games.push({
