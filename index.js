@@ -20,6 +20,7 @@ function auth (req, res, next){
             if(err){
                 res.status(401);
                 res.json({err:"token Inválido"});
+                
             }else{
                 req.token = token;
                 req.loggedUser = {id: data.id, email: data.email};
@@ -59,11 +60,11 @@ var DB = {
         {
             id: 1,
             name: "Jhonatan Neves",
-            email: "teste@gmail.com",
+            email: "teste1@gmail.com",
             password: "123456"
         },
         {
-            id: 1,
+            id: 2,
             name: "Alessandra Neves",
             email: "teste1@gmail.com",
             password: "123456789"
@@ -71,7 +72,7 @@ var DB = {
     ]
 }
 
-app.get("/games",auth, (req, res) => {
+app.get("/games", (req, res) => {
     res.statusCode = 200;
     res.json(DB.games);
 });
@@ -92,7 +93,7 @@ app.get("/game/:id" ,auth, (req, res) =>{
     }
 });
 
-app.post("/game", auth,(req,res) =>{
+app.post("/game",(req,res) =>{
     var {title, price, year} = req.body;
 
     DB.games.push({
@@ -150,7 +151,7 @@ app.put("/game/:id",auth,(req, res) => {
     }
 })
 
-app.post("/auth",auth,(req, res) => {
+app.post("/auth",(req, res) => {
     var {email,password} = req.body;
 
     if(email != undefined){
